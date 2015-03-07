@@ -4,6 +4,7 @@ var http = require('http');
 var url = require('url');
 
 var lightHandler = require('./handler').lightHandler;
+var onOffHandler = require('./handler').onOffHandler;
 
 var HTTP_PORT = 8080;
 var TCP_PORT  = 9058;
@@ -33,7 +34,14 @@ var httpServer = http.createServer(function(req, res){
   if(tcpSock) {
     var parsed = url.parse(req.url, true);
     var path = parsed.path;
-    if(path.lastIndexOf('/light', 0) === 0) lightHandler(req, res, pot, tcpSock, parsed.query);
+    if     (path.lastIndexOf('/light', 0) === 0)  lightHandler(req, res, pot, tcpSock, parsed.query);
+    else if(path.lastIndexOf('/air', 0) === 0)    onOffHandler('air',    req, res, pot, tcpSock, parsed.query);
+    else if(path.lastIndexOf('/water', 0) === 0)  onOffHandler('water',  req, res, pot, tcpSock, parsed.query);
+    else if(path.lastIndexOf('/heater', 0) === 0) onOffHandler('heater', req, res, pot, tcpSock, parsed.query);
+    else {
+      res.writeHead(404, {'content-type': 'text/html'});
+      res.end('Not Found.');
+    }
     console.log('Parse: ' + path);
 
   } else {
