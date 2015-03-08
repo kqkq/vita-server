@@ -1,15 +1,15 @@
 var net = require('net');
-//var crossroads = require('crossroads');
 var http = require('http');
 var url = require('url');
 
 var lightHandler = require('./handler').lightHandler;
 var onOffHandler = require('./handler').onOffHandler;
+var staticFileServer  = require('./static').staticFileServer;
 
 var HTTP_PORT = 8080;
 var TCP_PORT  = 9058;
 var tcpSock;
-var pot = {};
+var pot = {"ready": false, "light": 0, "air": false, "water": false, "heater": false};
 
 var tcpServer = net.createServer(function(c) { //'connection' listener
   console.log('client connected');
@@ -27,27 +27,20 @@ var tcpServer = net.createServer(function(c) { //'connection' listener
     tcpSock = undefined;
     pot.ready = false;
   });
+
+  c.write('SPOT');
 });
 
 var httpServer = http.createServer(function(req, res){
   //console.log('Request: ' + req.url);
-  if(tcpSock) {
-    var parsed = url.parse(req.url, true);
-    var path = parsed.path;
-    if     (path.lastIndexOf('/light', 0) === 0)  lightHandler(req, res, pot, tcpSock, parsed.query);
-    else if(path.lastIndexOf('/air', 0) === 0)    onOffHandler('air',    req, res, pot, tcpSock, parsed.query);
-    else if(path.lastIndexOf('/water', 0) === 0)  onOffHandler('water',  req, res, pot, tcpSock, parsed.query);
-    else if(path.lastIndexOf('/heater', 0) === 0) onOffHandler('heater', req, res, pot, tcpSock, parsed.query);
-    else {
-      res.writeHead(404, {'content-type': 'text/html'});
-      res.end('Not Found.');
-    }
-    console.log('Parse: ' + path);
-
-  } else {
-    res.writeHead(503, {'content-type': 'text/html'});
-    res.end(JSON.stringify(pot));
-  }
+  var parsed = url.parse(req.url, true);
+  var path = parsed.path;
+  if     (path.lastIndexOf('/light',  0) === 0) lightHandler(req, res, pot, tcpSock, parsed.query);
+  else if(path.lastIndexOf('/air',    0) === 0) onOffHandler('air',    req, res, pot, tcpSock, parsed.query);
+  else if(path.lastIndexOf('/water',  0) === 0) onOffHandler('water',  req, res, pot, tcpSock, parsed.query);
+  else if(path.lastIndexOf('/heater', 0) === 0) onOffHandler('heater', req, res, pot, tcpSock, parsed.query);
+  else                                          staticFileServer(req, res);
+  console.log('Parse: ' + path);
 });
 
 tcpServer.listen(TCP_PORT, function() { //'listening' listener
