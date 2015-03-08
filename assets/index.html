@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <script type="text/javascript" src="jquery-2.1.3.js"></script>
+    </head>
+    <body>
+        <h1>Smart Flowerpot</a>
+        <h2>Light control | Brightness = <span id="light">N/A</span></h2>
+            <a href="javascript:;" onclick="light(0);">Light 0</a>&nbsp;
+            <a href="javascript:;" onclick="light(64);">Light 64</a>&nbsp;
+            <a href="javascript:;" onclick="light(128);">Light 128</a>&nbsp;
+            <a href="javascript:;" onclick="light(192);">Light 192</a>&nbsp;
+            <a href="javascript:;" onclick="light(255);">Light 255</a>
+            
+            <h2>Fan control | Status: <span id="air">N/A</span></h2>
+            <a id="fan_on" href="javascript:;">Fan ON</a>
+            <a id="fan_off" href="javascript:;">Fan OFF</a>
+            
+            <h2>Pump control | Status: <span id="water">N/A</span></h2>
+            <a id="pump_on" href="javascript:;">Pump ON</a>
+            <a id="pump_off" href="javascript:;">Pump OFF</a>
+            
+            <h2>Heater control | Status: <span id="heater">N/A</span></h2>
+            <a id="heater_on" href="javascript:;">Heater ON</a>
+            <a id="heater_off" href="javascript:;">Heater OFF</a>
+
+            <script type="text/javascript">
+                $(document).ready(function() {
+                        console.log('jQuery is working');
+                        $.get("/light", function(json){
+                            $("#light").html(json.light);
+                            $("#air").html(json.air ? "ON" : "OFF");
+                            $("#water").html(json.water ? "ON" : "OFF");
+                            $("#heater").html(json.heater ? "ON" : "OFF");
+                        });
+                });
+
+                function light(brightness) {
+                    $.get("/light?dim=" + brightness, function(json){
+                        $("#light").html(json.light);
+                    });
+                }
+                
+                $("#fan_on").bind('click', function(){
+                    $.get("/air?action=on", function(json){
+                        $("#air").html(json.air ? "ON" : "OFF");
+                    });
+                });
+
+                $("#fan_off").bind('click', function(){
+                    $.get("/air?action=off", function(json){
+                        $("#air").html(json.air ? "ON" : "OFF");
+                    });
+                });
+ 
+                $("#pump_on").bind('click', function(){
+                    $.get("/water?action=on", function(json){
+                        $("#water").html(json.water ? "ON" : "OFF");
+                    });
+                });
+ 
+                $("#pump_off").bind('click', function(){
+                    $.get("/water?action=off", function(json){
+                        $("#water").html(json.water ? "ON" : "OFF");
+                    });
+                });
+ 
+                $("#heater_on").bind('click', function(){
+                    $.get("/heater?action=on", function(json){
+                        $("#heater").html(json.heater ? "ON" : "OFF");
+                    });
+                });
+ 
+                $("#heater_off").bind('click', function(){
+                    $.get("/heater?action=off", function(json){
+                        $("#heater").html(json.heater ? "ON" : "OFF");
+                    });
+                });
+ 
+            </script>
+    </body>
+</html>
