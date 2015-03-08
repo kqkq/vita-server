@@ -16,7 +16,7 @@ function deviceReady(sock, pot, res) {
 }
 
 function lightHandler(req, res, pot, sock, query) {
-  if(!deviceReady) return;
+  if(!deviceReady(sock, pot, res)) return;
   var brightness = 0;
   if(query.dim) {
     console.log(JSON.stringify(query));
@@ -42,6 +42,7 @@ function lightHandler(req, res, pot, sock, query) {
       console.log('Querying the brightness of Lights');
     });
     sock.on('data', function(data) {
+      console.log(JSON.stringify(data));
       brightness = parseInt(data, 10);
       if(!isNaN(brightness)) {
         pot.light = brightness;
@@ -53,7 +54,7 @@ function lightHandler(req, res, pot, sock, query) {
 }
 
 function onOffHandler(dev, req, res, pot, sock, query){
-  if(!deviceReady) return;
+  if(!deviceReady(sock, pot, res)) return;
   if(query.action){  //Operate
     console.log(JSON.stringify(query));
     if(query.action == 'on') {
