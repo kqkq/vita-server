@@ -1,4 +1,8 @@
+var logHistory = require('./history').logHistory;
+
 var inst = new Array();
+var lastWater = new Date(0);
+
 inst['air']    = {"name": "Fan",    "on": "!A", "off": "!a", "query": "?A"};
 inst['water']  = {"name": "Pump",   "on": "!W", "off": "!w", "query": "?W"};
 inst['heater'] = {"name": "Heater", "on": "!H", "off": "!h", "query": "?H"};
@@ -15,7 +19,7 @@ function deviceReady(sock, pot, res) {
   }
 }
 
-function lightHandler(req, res, pot, sock, query) {
+function pwmHandler(dev, db, req, res, pot, sock, query) {
   if(!deviceReady(sock, pot, res)) return;
   var brightness = 0;
   if(query.dim) {
@@ -34,6 +38,7 @@ function lightHandler(req, res, pot, sock, query) {
       if(data == 'R') {
         pot.light = brightness;
         console.log('Alternated brightness = ' + brightness);
+        logHistory(dev, req, brightness);
       }
       res.end(JSON.stringify(pot));
     });
@@ -42,7 +47,7 @@ function lightHandler(req, res, pot, sock, query) {
       console.log('Querying the brightness of Lights');
     });
     sock.on('data', function(data) {
-      console.log(JSON.stringify(data));
+      //console.log(JSON.stringify(data));
       brightness = parseInt(data, 10);
       if(!isNaN(brightness)) {
         pot.light = brightness;
@@ -53,7 +58,7 @@ function lightHandler(req, res, pot, sock, query) {
   }
 }
 
-function onOffHandler(dev, req, res, pot, sock, query){
+function onOffHandler(dev, db, req, res, pot, sock, query){
   if(!deviceReady(sock, pot, res)) return;
   if(query.action){  //Operate
     console.log(JSON.stringify(query));
@@ -74,6 +79,7 @@ function onOffHandler(dev, req, res, pot, sock, query){
       if(data == 'R') {
         eval('pot.' + dev + ' = (query.action == \'on\');');
         console.log('The ' + inst[dev].name + ' is switched ' + query.action);
+        logHistory(dev, req, query.action);
       }
       res.end(JSON.stringify(pot));
     });
@@ -90,5 +96,5 @@ function onOffHandler(dev, req, res, pot, sock, query){
   }
 }
 
-exports.lightHandler = lightHandler;
-exports.onOffHandler   = onOffHandler;
+exports.pwmHandler   = pwmHandler;
+exports.onOffHandler = onOffHandler;
