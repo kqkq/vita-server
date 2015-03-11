@@ -25,6 +25,8 @@
             <a id="heater_on" href="javascript:;">Heater ON</a>
             <a id="heater_off" href="javascript:;">Heater OFF</a>
 
+            <h2>History</h2>
+            <span id="history"></span>
             <script type="text/javascript">
                 $(document).ready(function() {
                         console.log('jQuery is working');
@@ -33,6 +35,17 @@
                             $("#air").html(json.air ? "ON" : "OFF");
                             $("#water").html(json.water ? "OK" : ("LOCKED " + json.remaining + "/" + json.total));
                             $("#heater").html(json.heater ? "ON" : "OFF");
+                        });
+                        var history = "";
+                        $.get("/history?limit=10", function(json) {
+                            var len = json.length;
+                            for(var i = 0; i < len; i++) {
+                                history += '[' + new Date(json[i].time).toLocaleString() + '] ' + 
+                                           'A friend from ' + json[i].loc + '(' + json[i].ip + ') ' + 
+                                           'turns the ' + json[i].device + 
+                                           ' to ' + json[i].action + '<br>';
+                            }
+                            $("#history").html(history);
                         });
                 });
 
