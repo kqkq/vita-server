@@ -5,12 +5,13 @@ var mongoClient = require('mongodb');
 
 var pwmHandler = require('./handler').pwmHandler;
 var onOffHandler = require('./handler').onOffHandler;
+var triggerHandler = require('./handler').triggerHandler;
 var historyHandler = require('./handler').historyHandler;
 var staticFileServer  = require('./static').staticFileServer;
 
 var HTTP_PORT = 8080;
 var TCP_PORT  = 9058;
-var pot = {"ready": false, "light": 0, "air": false, "water": false, "heater": false};
+var pot = {"ready": false, "light": 0, "air": false, "water": true, "remaining": 0, "total": 0, "heater": false};
 var tcpSock;
 
 var tcpServer = net.createServer(function(sock) { //'connection' listener
@@ -54,11 +55,11 @@ tcpServer.listen(TCP_PORT, function() { //'listening' listener
       //console.log('Request: ' + req.url);
       var parsed = url.parse(req.url, true);
       var path = parsed.path;
-      if     (path.lastIndexOf('/light',  0) === 0)  pwmHandler  ('light',  db, req, res, pot, tcpSock, parsed.query);
-      else if(path.lastIndexOf('/air',    0) === 0)  onOffHandler('air',    db, req, res, pot, tcpSock, parsed.query);
-      else if(path.lastIndexOf('/water',  0) === 0)  onOffHandler('water',  db, req, res, pot, tcpSock, parsed.query);
-      else if(path.lastIndexOf('/heater', 0) === 0)  onOffHandler('heater', db, req, res, pot, tcpSock, parsed.query);
-      else if(path.lastIndexOf('/history', 0) === 0) historyHandler(        db, req, res,               parsed.query);
+      if     (path.lastIndexOf('/light',  0) === 0)  pwmHandler    ('light',  db, req, res, pot, tcpSock, parsed.query);
+      else if(path.lastIndexOf('/air',    0) === 0)  onOffHandler  ('air',    db, req, res, pot, tcpSock, parsed.query);
+      else if(path.lastIndexOf('/water',  0) === 0)  triggerHandler('water',  db, req, res, pot, tcpSock, parsed.query);
+      else if(path.lastIndexOf('/heater', 0) === 0)  onOffHandler  ('heater', db, req, res, pot, tcpSock, parsed.query);
+      else if(path.lastIndexOf('/history', 0) === 0) historyHandler(          db, req, res,               parsed.query);
       else                                          staticFileServer(req, res);
       console.log('Parse: ' + path);
     });

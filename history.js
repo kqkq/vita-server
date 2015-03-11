@@ -34,20 +34,26 @@ function logHistory(db, dev, req, action) {
       if(ipLoc.code != 0) {
         console.log('Query IP Location Failed.');
       }
+      
       //Make a document (object for mongoDB) to insert
       var dbDoc = {};
-      dbDoc.ip     = ipLoc.data.ip;
+      dbDoc.ip     = ip;
       dbDoc.loc    = fixLocation(ipLoc.data.country, ipLoc.data.region, ipLoc.data.city);
       dbDoc.time   = new Date();
       dbDoc.device = dev;
       dbDoc.action = action;
-      console.log(JSON.stringify(dbDoc));
+      //console.log(JSON.stringify(dbDoc));
+      
       //Insert the document into collection
       var collection = db.collection('history');
       collection.insert(dbDoc, function(err, result) {
-        console.log('DB Server return: ' + JSON.stringify(result));
+        if(err) {
+          console.log('Insert failed! Message: ' + err.message);
+        } else {
+          console.log('Document inserted: ' + JSON.stringify(result));
+        }
       });
-    });
+    }); //ned of res.once(data)
     
     res.once('error', function(e) {
       console.log("Got error: " + e.message);
