@@ -22,7 +22,7 @@ function deviceReady(sock, pot, res) {
 function checkWater(db, callback) {
   var collection = db.collection('history');
   var tm = new Date(new Date() - PERIOD * 1000);
-  collection.find({"time": {"$gte": tm}}, {"_id": 0}).sort({"time": 1}).toArray(function(err, docs) {
+  collection.find({"time": {"$gte": tm}, "device": "water"}, {"_id": 0}).sort({"time": 1}).toArray(function(err, docs) {
     console.log(docs.length + ' docs up-to-date: ' + JSON.stringify(docs));
     var remainTime;
     if(docs.length < MAX_TRIGGER) {
@@ -171,10 +171,10 @@ function historyHandler(db, req, res, query) {
   var collection = db.collection('history');
   collection.find({}, {"_id": 0}).sort({"time": -1}).limit(limit).toArray(function(err, docs) {
     if(!err) {
-      console.log('Querying failed! Message: ' + err.message);
       res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
       res.end(JSON.stringify(docs));
     } else {
+      console.log('Querying failed! Message: ' + err.message);
       res.writeHead(500, {'Content-Type': 'application/json;charset=utf-8'});
       res.end();
     }
