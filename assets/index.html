@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
     </head>
     <body>
-        <h1>Smart Flowerpot&#21271;&#20140;&#24066;</a>
+        <h1>Smart Flowerpot</a>
         <h2>Light | Brightness = <span id="light">N/A</span></h2>
             <a href="javascript:;" onclick="light(0);">Light 0</a>&nbsp;
             <a href="javascript:;" onclick="light(64);">Light 64</a>&nbsp;
@@ -20,7 +20,6 @@
             
             <h2>Pump | Status: <span id="water">N/A</span></h2>
             <a id="pump_on" href="javascript:;">Pump ON</a>
-            <a id="pump_off" href="javascript:;">Pump OFF</a>
             
             <h2>Heater | Status: <span id="heater">N/A</span></h2>
             <a id="heater_on" href="javascript:;">Heater ON</a>
@@ -29,51 +28,51 @@
             <script type="text/javascript">
                 $(document).ready(function() {
                         console.log('jQuery is working');
-                        $.get("/light", function(json){
+                        $.get("/water", function(json){
                             $("#light").html(json.light);
                             $("#air").html(json.air ? "ON" : "OFF");
-                            $("#water").html(json.water ? "ON" : "OFF");
+                            $("#water").html(json.water ? "OK" : ("LOCKED " + json.remaining + "/" + json.total));
                             $("#heater").html(json.heater ? "ON" : "OFF");
                         });
                 });
 
                 function light(brightness) {
+                    $("#light").html("Querying");
                     $.get("/light?dim=" + brightness, function(json){
                         $("#light").html(json.light);
                     });
                 }
                 
                 $("#fan_on").bind('click', function(){
+                    $("#air").html("Querying");
                     $.get("/air?action=on", function(json){
                         $("#air").html(json.air ? "ON" : "OFF");
                     });
                 });
 
                 $("#fan_off").bind('click', function(){
+                    $("#air").html("Querying");
                     $.get("/air?action=off", function(json){
                         $("#air").html(json.air ? "ON" : "OFF");
                     });
                 });
  
                 $("#pump_on").bind('click', function(){
+                    $("#water").html("Querying");
                     $.get("/water?action=on", function(json){
-                        $("#water").html(json.water ? "ON" : "OFF");
-                    });
-                });
- 
-                $("#pump_off").bind('click', function(){
-                    $.get("/water?action=off", function(json){
-                        $("#water").html(json.water ? "ON" : "OFF");
+                        $("#water").html(json.water ? "OK" : ("LOCKED " + json.remaining + "/" + json.total));
                     });
                 });
  
                 $("#heater_on").bind('click', function(){
+                    $("#heater").html("Querying");
                     $.get("/heater?action=on", function(json){
                         $("#heater").html(json.heater ? "ON" : "OFF");
                     });
                 });
  
                 $("#heater_off").bind('click', function(){
+                    $("#heater").html("Querying");
                     $.get("/heater?action=off", function(json){
                         $("#heater").html(json.heater ? "ON" : "OFF");
                     });
