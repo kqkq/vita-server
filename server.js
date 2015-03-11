@@ -22,14 +22,14 @@ var tcpServer = net.createServer(function(sock) { //'connection' listener
     //console.log('KeepAlive');
   }, 5000);
 
-  sock.on('end', function() {
+  sock.once('end', function() {
     console.log('client disconnected');
     tcpSock = undefined;
     pot.ready = false;
     clearInterval(timerID);
   });
 
-  sock.on('error', function(e){
+  sock.once('error', function(e){
     console.log('Error: ' + e.code + ', TCP connection terminated.');
     tcpSock = undefined;
     pot.ready = false;

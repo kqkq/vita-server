@@ -13,7 +13,7 @@ function fixLocation(country, region, city) {
   }
 }
 
-function logHistory(dev, req, action) {
+function logHistory(db, dev, req, action) {
   //
   // Put following code into nginx's config file to make header['x-real-ip'] work
   //
@@ -29,7 +29,7 @@ function logHistory(dev, req, action) {
     } else {
       console.log('Waiting taobao');
     }
-    res.on('data', function(json) {
+    res.once('data', function(json) {
       var ipLoc = JSON.parse(json);
       if(ipLoc.code != 0) {
         console.log('Query IP Location Failed.');
@@ -42,9 +42,14 @@ function logHistory(dev, req, action) {
       dbDoc.device = dev;
       dbDoc.action = action;
       console.log(JSON.stringify(dbDoc));
+      //Insert the document into collection
+      var collection = db.collection('history');
+      collection.insert(dbDoc, function(err, result) {
+        console.log('DB Server return: ' + JSON.stringify(result));
+      });
     });
     
-    res.on('error', function(e) {
+    res.once('error', function(e) {
       console.log("Got error: " + e.message);
     });
   });

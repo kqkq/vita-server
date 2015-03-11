@@ -34,11 +34,11 @@ function pwmHandler(dev, db, req, res, pot, sock, query) {
         console.log('Alternate brightness to ' + brightness);
       });
     }
-    sock.on('data', function(data){
+    sock.once('data', function(data){
       if(data == 'R') {
         pot.light = brightness;
         console.log('Alternated brightness = ' + brightness);
-        logHistory(dev, req, brightness);
+        logHistory(db, dev, req, brightness);
       }
       res.end(JSON.stringify(pot));
     });
@@ -46,7 +46,7 @@ function pwmHandler(dev, db, req, res, pot, sock, query) {
     sock.write('?L', function(){
       console.log('Querying the brightness of Lights');
     });
-    sock.on('data', function(data) {
+    sock.once('data', function(data) {
       //console.log(JSON.stringify(data));
       brightness = parseInt(data, 10);
       if(!isNaN(brightness)) {
@@ -75,11 +75,11 @@ function onOffHandler(dev, db, req, res, pot, sock, query){
         console.log('Unrecognized arguments: ' + query.action);
       });
     }
-    sock.on('data', function(data) {  //Waiting for acknowledgement
+    sock.once('data', function(data) {  //Waiting for acknowledgement
       if(data == 'R') {
         eval('pot.' + dev + ' = (query.action == \'on\');');
         console.log('The ' + inst[dev].name + ' is switched ' + query.action);
-        logHistory(dev, req, query.action);
+        logHistory(db, dev, req, query.action);
       }
       res.end(JSON.stringify(pot));
     });
@@ -87,7 +87,7 @@ function onOffHandler(dev, db, req, res, pot, sock, query){
     sock.write(inst[dev].query, function(){
       console.log('Querying the state of ' + inst[dev].name);
     });
-    sock.on('data', function(data) {  //Waiting for acknowledgement
+    sock.once('data', function(data) {  //Waiting for acknowledgement
       if(data == '1') eval('pot.' + dev + ' = true');
       else eval('pot.' + dev + ' = false');
       console.log('The lights are ' + (data == 1 ? 'ON' : 'OFF'));
