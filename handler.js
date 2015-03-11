@@ -96,5 +96,21 @@ function onOffHandler(dev, db, req, res, pot, sock, query){
   }
 }
 
-exports.pwmHandler   = pwmHandler;
-exports.onOffHandler = onOffHandler;
+function historyHandler(db, req, res, query) {
+  var limit = !isNaN(query.limit) ? parseInt(query.limit, 10) : 20;
+  if(limit > 200) limit = 200;
+  var collection = db.collection('history');
+  collection.find({}, {"_id": 0}).sort({"time": -1}).limit(limit).toArray(function(err, docs) {
+    if(!err) {
+      res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
+      res.end(JSON.stringify(docs));
+    } else {
+      res.writeHead(500, {'Content-Type': 'application/json;charset=utf-8'});
+      res.end();
+    }
+  });
+}
+
+exports.pwmHandler     = pwmHandler;
+exports.onOffHandler   = onOffHandler;
+exports.historyHandler = historyHandler;

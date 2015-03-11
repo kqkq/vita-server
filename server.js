@@ -5,6 +5,7 @@ var mongoClient = require('mongodb');
 
 var pwmHandler = require('./handler').pwmHandler;
 var onOffHandler = require('./handler').onOffHandler;
+var historyHandler = require('./handler').historyHandler;
 var staticFileServer  = require('./static').staticFileServer;
 
 var HTTP_PORT = 8080;
@@ -53,10 +54,11 @@ tcpServer.listen(TCP_PORT, function() { //'listening' listener
       //console.log('Request: ' + req.url);
       var parsed = url.parse(req.url, true);
       var path = parsed.path;
-      if     (path.lastIndexOf('/light',  0) === 0) pwmHandler  ('light',  db, req, res, pot, tcpSock, parsed.query);
-      else if(path.lastIndexOf('/air',    0) === 0) onOffHandler('air',    db, req, res, pot, tcpSock, parsed.query);
-      else if(path.lastIndexOf('/water',  0) === 0) onOffHandler('water',  db, req, res, pot, tcpSock, parsed.query);
-      else if(path.lastIndexOf('/heater', 0) === 0) onOffHandler('heater', db, req, res, pot, tcpSock, parsed.query);
+      if     (path.lastIndexOf('/light',  0) === 0)  pwmHandler  ('light',  db, req, res, pot, tcpSock, parsed.query);
+      else if(path.lastIndexOf('/air',    0) === 0)  onOffHandler('air',    db, req, res, pot, tcpSock, parsed.query);
+      else if(path.lastIndexOf('/water',  0) === 0)  onOffHandler('water',  db, req, res, pot, tcpSock, parsed.query);
+      else if(path.lastIndexOf('/heater', 0) === 0)  onOffHandler('heater', db, req, res, pot, tcpSock, parsed.query);
+      else if(path.lastIndexOf('/history', 0) === 0) historyHandler(        db, req, res,               parsed.query);
       else                                          staticFileServer(req, res);
       console.log('Parse: ' + path);
     });
