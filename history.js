@@ -13,7 +13,51 @@ function fixLocation(country, region, city) {
   }
 }
 
-function logHistory(db, dev, req, action) {
+function initCounter(db, dev, callback) {
+  var collection = db.collection('daily_counter');
+  var datetime = new Date();
+  var today = new Date(datetime.getFullYear(), datetime.getMonth(), datetime.getDate());
+  collection.find({"date": {"$gte": today, "$lte": today}}, {"_id": 0}).count(function(err, count) {
+    if(count == 0) {
+      collection.insert({"date": today, "light": 0, "air": 0, "water": 0, "heater": 0, "total": 0}, function(err, result) {
+        if(!err) console.log('A new day! Counter created.');
+        var collection2 = db.collection('main_counter');
+        collection2.find({}).count(function() {
+          if(count == 0) {
+            collection2.insert({"light": 0, "air": 0, "water": 0, "heater": 0, "total": 0}, function(err, result) {
+              if(!err) console.log('Main counter initialized.');
+              callback();
+            });
+          }
+        });
+      });
+    } else {
+      callback();
+    }
+  });
+}
+
+function updateCounter(db, dev, callback) {
+  var collection = db.collection('daily_counter');
+  var datetime = new Date();
+  var today = new Date(datetime.getFullYear(), datetime.getMonth(), datetime.getDate());
+  initCounter(db, dev, function() {
+    var obj = {"$inc": {"total": 1}};
+    obj.$inc[dev] = 1;
+    collection.update({"date": {"$gte": today, "$lte": today}}, obj, function(err, result) {
+      console.log('Daily Counter updated.');
+      var collection2 = db.collection('main_counter');
+      var obj2 = {"$inc": {"total": 1}};
+      obj2.$inc[dev] = 1;
+      collection2.update({}, obj2, function(err, result) {
+        console.log('Main ounter updated.');
+        if(callback) callback();
+      });
+    });
+  });
+}
+
+function logHistory(db, dev, req, action, callback) {
   //
   // Put following code into nginx's config file to make header['x-real-ip'] work
   //
@@ -52,6 +96,9 @@ function logHistory(db, dev, req, action) {
         } else {
           console.log('Document inserted: ' + JSON.stringify(result));
         }
+        updateCounter(db, dev, function() {
+          if(callback) callback(err, result);
+        });
       });
     }); //ned of res.once(data)
     

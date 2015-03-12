@@ -56,9 +56,10 @@ function pwmHandler(dev, db, req, res, pot, sock, query) {
       if(data == 'R') {
         pot.light = brightness;
         console.log('Alternated brightness = ' + brightness);
-        logHistory(db, dev, req, brightness);
+        logHistory(db, dev, req, brightness, function() {
+          res.end(JSON.stringify(pot));
+        });
       }
-      res.end(JSON.stringify(pot));
     });
   } else {
     sock.write('?L', function(){
@@ -97,9 +98,10 @@ function onOffHandler(dev, db, req, res, pot, sock, query){
       if(data == 'R') {
         eval('pot.' + dev + ' = (query.action == \'on\');');
         console.log('The ' + inst[dev].name + ' is switched ' + query.action);
-        logHistory(db, dev, req, query.action);
+        logHistory(db, dev, req, query.action, function() {
+          res.end(JSON.stringify(pot));
+        });
       }
-      res.end(JSON.stringify(pot));
     });
   } else {           //Accquire
     sock.write(inst[dev].query, function(){
@@ -133,9 +135,10 @@ function triggerHandler(dev, db, req, res, pot, sock, query){
             if(data == 'R') {
               eval('pot.' + dev + ' = (query.action == \'on\');');
               console.log('The ' + inst[dev].name + ' is switched ' + query.action);
-              logHistory(db, dev, req, query.action);
+              logHistory(db, dev, req, query.action, function() {
+                res.end(JSON.stringify(pot));
+              });
             }
-            res.end(JSON.stringify(pot));
           }); //end of sock.once callback
         } else {
           pot.water = false;
