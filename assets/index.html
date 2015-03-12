@@ -28,14 +28,8 @@
             <h2>History</h2>
             <span id="history"></span>
             <script type="text/javascript">
-                $(document).ready(function() {
-                        console.log('jQuery is working');
-                        $.get("/water", function(json){
-                            $("#light").html(json.light);
-                            $("#air").html(json.air ? "ON" : "OFF");
-                            $("#water").html(json.water ? "OK" : ("LOCKED " + json.remaining + "/" + json.total));
-                            $("#heater").html(json.heater ? "ON" : "OFF");
-                        });
+
+                function refreshHistory() {
                         var history = "";
                         $.get("/history?limit=10", function(json) {
                             var len = json.length;
@@ -47,12 +41,25 @@
                             }
                             $("#history").html(history);
                         });
+                }
+
+
+                $(document).ready(function() {
+                        console.log('jQuery is working');
+                        $.get("/water", function(json){
+                            $("#light").html(json.light);
+                            $("#air").html(json.air ? "ON" : "OFF");
+                            $("#water").html(json.water ? "OK" : ("LOCKED " + json.remaining + "/" + json.total));
+                            $("#heater").html(json.heater ? "ON" : "OFF");
+                        });
+                        refreshHistory();
                 });
 
                 function light(brightness) {
                     $("#light").html("Querying");
                     $.get("/light?dim=" + brightness, function(json){
                         $("#light").html(json.light);
+                        refreshHistory();
                     });
                 }
                 
@@ -60,6 +67,7 @@
                     $("#air").html("Querying");
                     $.get("/air?action=on", function(json){
                         $("#air").html(json.air ? "ON" : "OFF");
+                        refreshHistory();
                     });
                 });
 
@@ -67,6 +75,7 @@
                     $("#air").html("Querying");
                     $.get("/air?action=off", function(json){
                         $("#air").html(json.air ? "ON" : "OFF");
+                        refreshHistory();
                     });
                 });
  
@@ -74,6 +83,7 @@
                     $("#water").html("Querying");
                     $.get("/water?action=on", function(json){
                         $("#water").html(json.water ? "OK" : ("LOCKED " + json.remaining + "/" + json.total));
+                        refreshHistory();
                     });
                 });
  
@@ -81,6 +91,7 @@
                     $("#heater").html("Querying");
                     $.get("/heater?action=on", function(json){
                         $("#heater").html(json.heater ? "ON" : "OFF");
+                        refreshHistory();
                     });
                 });
  
@@ -88,6 +99,7 @@
                     $("#heater").html("Querying");
                     $.get("/heater?action=off", function(json){
                         $("#heater").html(json.heater ? "ON" : "OFF");
+                        refreshHistory();
                     });
                 });
  
