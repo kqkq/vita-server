@@ -12,7 +12,7 @@ function fixLocation(country, region, city) {
     return '\u706b\u661f'; // Chinese words: Mars (Huo Xing)
   }
 }
-
+/*
 function initCounter(db, dev, callback) {
   var collection = db.collection('daily_counter');
   var datetime = new Date();
@@ -36,25 +36,25 @@ function initCounter(db, dev, callback) {
     }
   });
 }
-
+*/
 function updateCounter(db, dev, callback) {
   var collection = db.collection('daily_counter');
   var datetime = new Date();
   var today = new Date(datetime.getFullYear(), datetime.getMonth(), datetime.getDate());
-  initCounter(db, dev, function() {
-    var obj = {"$inc": {"total": 1}};
-    obj.$inc[dev] = 1;
-    collection.update({"date": {"$gte": today, "$lte": today}}, obj, function(err, result) {
-      console.log('Daily Counter updated.');
-      var collection2 = db.collection('main_counter');
-      var obj2 = {"$inc": {"total": 1}};
-      obj2.$inc[dev] = 1;
-      collection2.update({}, obj2, function(err, result) {
-        console.log('Main ounter updated.');
-        if(callback) callback();
-      });
+  //initCounter(db, dev, function() {
+  var obj = {"$inc": {"total": 1}};
+  obj.$inc[dev] = 1;
+  collection.update({"date": {"$gte": today, "$lte": today}}, obj, function(err, result) {
+    console.log('Daily Counter updated.');
+    var collection2 = db.collection('main_counter');
+    var obj2 = {"$inc": {"total": 1}};
+    obj2.$inc[dev] = 1;
+    collection2.update({}, obj2, function(err, result) {
+      console.log('Main ounter updated.');
+      if(callback) callback();
     });
   });
+  //});
 }
 
 function logHistory(db, dev, req, action, callback) {
