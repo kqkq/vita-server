@@ -186,11 +186,15 @@ function historyHandler(db, req, res, query) {
 
 function counterHandler(db, req, res, pathname) {
   var s = pathname.split('/');
+  var datetime = new Date();
+  var today = new Date(datetime.getFullYear(), datetime.getMonth(), datetime.getDate());
+
   if(s.length != 3 || (s[2] != 'main' && s[2] != 'daily')) {
     res.writeHead(403, {'Content-Type': 'application/json;charset=utf-8'});
     res.end();
     return;
   }
+  
   var collection = db.collection(s[2] + '_counter');
   if(s[2] == 'main') {
     collection.find({}, {"_id": 0}).toArray(function(err, result) {
@@ -204,8 +208,9 @@ function counterHandler(db, req, res, pathname) {
       }
     });
   }
+  
   if(s[2] == 'daily') {
-    collection.find({}, {"_id": 0}).sort({"date": 1}).limit(7).toArray(function(err, result) {
+    collection.find({"date": {"$lte": today}}, {"_id": 0}).sort({"date": -1}).limit(7).toArray(function(err, result) {
        if(!err) {
         res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
         res.end(JSON.stringify(result));
