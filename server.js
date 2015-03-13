@@ -7,6 +7,7 @@ var pwmHandler = require('./handler').pwmHandler;
 var onOffHandler = require('./handler').onOffHandler;
 var triggerHandler = require('./handler').triggerHandler;
 var historyHandler = require('./handler').historyHandler;
+var counterHandler = require('./handler').counterHandler;
 var staticFileServer  = require('./static').staticFileServer;
 
 var HTTP_PORT = 8080;
@@ -60,6 +61,7 @@ tcpServer.listen(TCP_PORT, function() { //'listening' listener
       else if(path.lastIndexOf('/water',  0) === 0)  triggerHandler('water',  db, req, res, pot, tcpSock, parsed.query);
       else if(path.lastIndexOf('/heater', 0) === 0)  onOffHandler  ('heater', db, req, res, pot, tcpSock, parsed.query);
       else if(path.lastIndexOf('/history', 0) === 0) historyHandler(          db, req, res,               parsed.query);
+      else if(path.lastIndexOf('/counter', 0) === 0) counterHandler(          db, req, res,               parsed.pathname);
       else                                          staticFileServer(req, res);
       console.log('Parse: ' + path);
     });

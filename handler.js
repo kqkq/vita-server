@@ -184,7 +184,42 @@ function historyHandler(db, req, res, query) {
   });
 }
 
+function counterHandler(db, req, res, pathname) {
+  var s = pathname.split('/');
+  if(s.length != 3 || (s[2] != 'main' && s[2] != 'daily')) {
+    res.writeHead(403, {'Content-Type': 'application/json;charset=utf-8'});
+    res.end();
+    return;
+  }
+  var collection = db.collection(s[2] + '_counter');
+  if(s[2] == 'main') {
+    collection.find({}, {"_id": 0}).toArray(function(err, result) {
+      if(!err) {
+        res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
+        res.end(JSON.stringify(result[0]));
+      } else {
+        console.log('Querying failed! Message: ' + err.message);
+        res.writeHead(500, {'Content-Type': 'application/json;charset=utf-8'});
+        res.end();
+      }
+    });
+  }
+  if(s[2] == 'daily') {
+    collection.find({}, {"_id": 0}).sort({"date": 1}).limit(7).toArray(function(err, result) {
+       if(!err) {
+        res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
+        res.end(JSON.stringify(result));
+      } else {
+        console.log('Querying failed! Message: ' + err.message);
+        res.writeHead(500, {'Content-Type': 'application/json;charset=utf-8'});
+        res.end();
+      }
+    });
+  }
+}
+
 exports.pwmHandler     = pwmHandler;
 exports.onOffHandler   = onOffHandler;
 exports.triggerHandler = triggerHandler;
 exports.historyHandler = historyHandler;
+exports.counterHandler = counterHandler;
