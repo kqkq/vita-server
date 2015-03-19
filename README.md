@@ -77,11 +77,11 @@ All of the APIs above should return JSON strings that indicate the current statu
 
 1. `GET /history`
 
-Return 200 entries of latest operation history.
+Returns up to 200 entries of latest operation history.
 
 2. `GET /history?limit={Number}`
 
-Return limited `Number`s of latest operation history.
+Returns limited `Number`s of latest operation history.
 
 Returned JSON:
 
@@ -95,7 +95,7 @@ Returned JSON:
 
 1. `GET /counter/main`
 
-Return the number of participants (or operations) since the begining of the project.
+Returns the number of participants (or operations) since the begining of the project.
 
 KV pairs:
 
