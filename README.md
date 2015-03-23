@@ -143,9 +143,11 @@ Instructions sent form server to flowerpot:
 Instructions expected from client:
 
 * ACK message
-    - A ASCII character `R` stand for "Received". Server will wait for a ACK message for every command except the handshake message `SPOT`.
+    - A ASCII character `R` stand for "Received". Server will wait for a ACK message for most of the command except:
+        + Handshake message `SPOT` should not be acknowledged.
+        + Keep-alive command `K` should be acknowledged but server won't wait for it.
 * Response to a querying
     - A single ASCII character `0` or `1` should be sent once a querying command (eg. `?A`/`?W`/`?H`) is issued.
-    - Three ASCII character `0`\~`9` should be sent once querying the brightness (`?L` is received).
+    - Three ASCII character `0`\~`9` should be sent once querying the brightness (`?L` is issued).
 
 ## Running behind a Nginx reverse proxy server
