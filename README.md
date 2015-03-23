@@ -113,12 +113,39 @@ An array with 7 elements. Each element is a daily counter of a day. The structur
 
 ## Static HTTP Server
 
+All of the requests are treated as static files requests except the APIs listed before. The root directory of static files is `assets`.
+
 ## Dedicated TCP Protocol
 
-### Handshake
+The flowerpot (aka. Vita) is communicating with the server with a dedicated protocol based on TCP. 
 
-### Keep-alive
+Instructions sent form server to flowerpot: 
 
-### Operate the flowerpot
+* ON/OFF command start with a `!`
+    - Turn on a fan: `!A`
+    - Turn off a fan: `!a`
+    - Turn on a pump: `!W`
+    - Turn off a pump: `!w`
+    - Turn on a heater: `!H`
+    - Turn off a heater: `!h`
+* PWM command start with a `~`
+    - Adjust the brightness of a light: `~L` followed by three digits. Example: `~L064` (set the brightness of the light to 64, the leading zero is required)
+* Querying command start with a `?`
+    - Query the state of a fan: `?A`
+    - Query the state of a pump: `?W`
+    - Query the state of a heater: `?H`
+    - Query the brightness of a light: `?L`
+* Keep-alive message
+    - A single character `K` is sent every 5 seconds.
+* Handshake message
+    - `SPOT` is sent once a client is connected.
 
-## Running behind the Nginx reverse proxy
+Instructions expected from client:
+
+* ACK message
+    - A ASCII character `R` stand for "Received". Server will wait for a ACK message for every command except the handshake message `SPOT`.
+* Response to a querying
+    - A single ASCII character `0` or `1` should be sent once a querying command (eg. `?A`/`?W`/`?H`) is issued.
+    - Three ASCII character `0`\~`9` should be sent once querying the brightness (`?L` is received).
+
+## Running behind a Nginx reverse proxy server
