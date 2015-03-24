@@ -69,14 +69,14 @@ function logHistory(db, dev, req, action, callback) {
   http.get('http://ip.taobao.com/service/getIpInfo.php?ip=' + ip, function(res) {
     res.setEncoding('utf8');
     if(res.statusCode != 200) {
-      console.log('Query IP Location Failed.');
+      console.log('Query IP Location Failed. HTTP: ' + res.statusCode);
     } else {
       console.log('Waiting taobao');
     }
     res.once('data', function(json) {
       var ipLoc = JSON.parse(json);
       if(ipLoc.code != 0) {
-        console.log('Query IP Location Failed.');
+        console.log('Query IP Location Failed. Got: ' + json);
       }
       
       //Make a document (object for mongoDB) to insert
