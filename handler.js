@@ -37,7 +37,7 @@ function checkWater(db, callback) {
   });
 }
 
-function pwmHandler(dev, db, req, res, pot, sock, query) {
+function pwmHandler(dev, db, req, res, pot, sock, websocket, query) {
   if(!deviceReady(sock, pot, res)) return;
   var brightness = 0;
   if(query.dim) {
@@ -58,6 +58,7 @@ function pwmHandler(dev, db, req, res, pot, sock, query) {
         console.log('Alternated brightness = ' + brightness);
         logHistory(db, dev, req, brightness, function() {
           res.end(JSON.stringify(pot));
+          websocket.emit('pot', JSON.stringify(pot));
         });
       }
     });
@@ -77,7 +78,7 @@ function pwmHandler(dev, db, req, res, pot, sock, query) {
   }
 }
 
-function onOffHandler(dev, db, req, res, pot, sock, query){
+function onOffHandler(dev, db, req, res, pot, sock, websocket, query){
   if(!deviceReady(sock, pot, res)) return;
   if(query.action){  //Operate
     console.log(JSON.stringify(query));
@@ -100,6 +101,7 @@ function onOffHandler(dev, db, req, res, pot, sock, query){
         console.log('The ' + inst[dev].name + ' is switched ' + query.action);
         logHistory(db, dev, req, query.action, function() {
           res.end(JSON.stringify(pot));
+          websocket.emit('pot', pot);
         });
       }
     });
@@ -116,7 +118,7 @@ function onOffHandler(dev, db, req, res, pot, sock, query){
   }
 }
 
-function triggerHandler(dev, db, req, res, pot, sock, query){
+function triggerHandler(dev, db, req, res, pot, sock, websocket, query){
   if(!deviceReady(sock, pot, res)) return;
   if(query.action){  //Operate
     console.log(JSON.stringify(query));
@@ -137,6 +139,7 @@ function triggerHandler(dev, db, req, res, pot, sock, query){
               console.log('The ' + inst[dev].name + ' is switched ' + query.action);
               logHistory(db, dev, req, query.action, function() {
                 res.end(JSON.stringify(pot));
+                websocket.emit('pot', JSON.stringify(pot));
               });
             }
           }); //end of sock.once callback
