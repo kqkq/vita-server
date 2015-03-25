@@ -43,6 +43,8 @@ Vita Server is developed with [Node.js](https://nodejs.org) and [MongoDB](http:/
 		
 ## RESTful API
 
+RESTful feed is listening on port 8080.
+
 ### Query the state of the flowerpot
 
 1. `GET /light`
@@ -113,11 +115,11 @@ An array with 7 elements. Each element is a daily counter of a day. The structur
 
 ## Static HTTP Server
 
-All of the requests are treated as static files requests except the APIs listed before. The root directory of static files is `assets`.
+All of the requests are treated as static files requests except the APIs listed before. The root directory of static files is `assets`. Static HTTP server is listening on port 8080.
 
 ## Dedicated TCP Protocol
 
-The flowerpot (aka. Vita) is communicating with the server with a dedicated protocol based on TCP. 
+The flowerpot (aka. Vita) is communicating with the server with a dedicated protocol based on TCP. The TCP server is listening on port 9058.
 
 Instructions sent form server to flowerpot: 
 
