@@ -58,7 +58,7 @@ function pwmHandler(dev, db, req, res, pot, sock, websocket, query) {
         console.log('Alternated brightness = ' + brightness);
         logHistory(db, dev, req, brightness, function() {
           res.end(JSON.stringify(pot));
-          websocket.emit('pot', JSON.stringify(pot));
+          websocket.emit('pot', pot);
         });
       }
     });
@@ -139,7 +139,7 @@ function triggerHandler(dev, db, req, res, pot, sock, websocket, query){
               console.log('The ' + inst[dev].name + ' is switched ' + query.action);
               logHistory(db, dev, req, query.action, function() {
                 res.end(JSON.stringify(pot));
-                websocket.emit('pot', JSON.stringify(pot));
+                websocket.emit('pot', pot);
               });
             }
           }); //end of sock.once callback
