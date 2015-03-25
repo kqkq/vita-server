@@ -151,3 +151,34 @@ Instructions expected from client:
     - Three ASCII character `0`\~`9` should be sent once querying the brightness (`?L` is issued).
 
 ## Running behind a Nginx reverse proxy server
+
+A sample nginx configuration file:
+
+	server {
+	    listen       80;
+	    server_name  You_Hostname_Here;
+
+	    location / {
+	        #root   /usr/share/nginx/html;
+	        #index  index.html index.htm;
+	        proxy_pass http://127.0.0.1:8080;
+	        proxy_http_version 1.1;
+	        proxy_set_header Upgrade $http_upgrade;
+	        proxy_set_header Connection "upgrade";
+	        proxy_set_header X-Real-IP  $remote_addr;
+	    }
+	}
+	
+Paste the code to a file in `site-available` directory and make a symbolic link to `site-enabled`. Use `nginx -s reload` to to reload the latest configuration file.
+	
+### Enable the IP address acquisition
+
+`proxy_set_header X-Real-IP  $remote_addr;` is required to make the IP address (and location) acquisition feature works.
+
+### Accept the HTML5 WebSocket connection
+
+Following code is required to make WebSocket works:
+
+	proxy_http_version 1.1;
+	proxy_set_header Upgrade $http_upgrade;
+	proxy_set_header Connection "upgrade";
