@@ -2,6 +2,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
+        <title>Vita's Raising</title>
+        <link href="favicon.ico" mce_href="favicon.ico" rel="bookmark" type="image/x-icon" /> 
+        <link href="favicon.ico" mce_href="favicon.ico" rel="icon" type="image/x-icon" /> 
+        <link href="favicon.ico" mce_href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
         <script type="text/javascript" src="socket.io-1.3.4.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -52,15 +56,6 @@
                     $("#heater").html(json.heater ? "ON" : "OFF");
                 });
 
-                function refreshStatus() {
-                     $.get("/water", function(json){
-                        $("#light").html(json.light);
-                        $("#air").html(json.air ? "ON" : "OFF");
-                        $("#water").html(json.water ? "OK" : ("LOCKED " + json.remaining + "/" + json.total));
-                        $("#heater").html(json.heater ? "ON" : "OFF");
-                    });
-                }
-
                 function refreshHistory() {
                         var history = "";
                         $.get("/history?limit=10", function(json) {
@@ -79,7 +74,6 @@
                     $.get("/counter/daily", function(json) {
                         var colData = [['date'], ['total']];
                         for(var i = 0; i < json.length; i++) {
-                            //irowData[i] = 
                             colData[0].push(new Date(json[i].date));
                             colData[1].push(json[i].total);
                         }
@@ -131,7 +125,6 @@
 
                 $(document).ready(function() {
                         console.log('jQuery is working');
-                        refreshStatus();
                         refreshHistory();
                         refreshChart();
                         refreshStatistics();

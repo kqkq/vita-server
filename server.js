@@ -8,6 +8,7 @@ var onOffHandler = require('./handler').onOffHandler;
 var triggerHandler = require('./handler').triggerHandler;
 var historyHandler = require('./handler').historyHandler;
 var counterHandler = require('./handler').counterHandler;
+var checkWater = require('./handler').checkWater;
 var staticFileServer  = require('./static').staticFileServer;
 
 var HTTP_PORT = 8080;
@@ -62,7 +63,7 @@ tcpServer.listen(TCP_PORT, function() { //'listening' listener
       else if(path.lastIndexOf('/heater', 0) === 0)  onOffHandler  ('heater', db, req, res, pot, tcpSock, webSocket, parsed.query);
       else if(path.lastIndexOf('/history', 0) === 0) historyHandler(          db, req, res,               parsed.query);
       else if(path.lastIndexOf('/counter', 0) === 0) counterHandler(          db, req, res,               parsed.pathname);
-      else                                          staticFileServer(req, res);
+      else                                           staticFileServer(req, res);
       console.log('Parse: ' + path);
     });
 
@@ -72,7 +73,24 @@ tcpServer.listen(TCP_PORT, function() { //'listening' listener
       socket.on('disconnect', function () {
         console.log('A WebSocket is DISCONNECTED.');
       });
+      checkWater(db, function(remaining, total) {
+        pot.remaining = remaining;
+        pot.total = total;
+        pot.water = (remaining == 0);
+        socket.emit('pot', pot);
+      });
     });
+    
+    setInterval(function() {
+      if(pot.water == false) {
+        checkWater(db, function(remaining, total) {
+          pot.remaining = remaining;
+          pot.total = total;
+          pot.water = (remaining == 0);
+          webSocket.emit('pot', pot);
+        });
+      }
+    }, 15000);
     
     httpServer.listen(HTTP_PORT, function(){
       console.log('HTTP server listening on port ' + HTTP_PORT);

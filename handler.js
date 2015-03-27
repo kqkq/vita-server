@@ -3,9 +3,9 @@ var logHistory = require('./history').logHistory;
 var inst = new Array();
 var MAX_TRIGGER = 10, PERIOD = 600; //You can water Vita `MAX_TRIGGER` times in `PERIOD` seconds.
 
-inst['air']    = {"name": "Fan",    "on": "!A", "off": "!a", "query": "?A"};
-inst['water']  = {"name": "Pump",   "on": "!W", "off": "!w", "query": "?W"};
-inst['heater'] = {"name": "Heater", "on": "!H", "off": "!h", "query": "?H"};
+inst['air']    = {"name": "Fan",    "on": "!A", "off": "!a"};
+inst['water']  = {"name": "Pump",   "on": "!W", "off": "!w"};
+inst['heater'] = {"name": "Heater", "on": "!H", "off": "!h"};
 
 function deviceReady(sock, pot, res) {
   if(!sock) {
@@ -23,7 +23,7 @@ function checkWater(db, callback) {
   var collection = db.collection('history');
   var tm = new Date(new Date() - PERIOD * 1000);
   collection.find({"time": {"$gte": tm}, "device": "water"}, {"_id": 0}).sort({"time": 1}).toArray(function(err, docs) {
-    console.log(docs.length + ' docs up-to-date: ' + JSON.stringify(docs));
+    console.log(docs.length + ' docs up-to-date');
     var remainTime;
     if(docs.length < MAX_TRIGGER) {
       remainTime = 0;
@@ -58,23 +58,16 @@ function pwmHandler(dev, db, req, res, pot, sock, websocket, query) {
         console.log('Alternated brightness = ' + brightness);
         logHistory(db, dev, req, brightness, function() {
           res.end(JSON.stringify(pot));
-          websocket.emit('pot', pot);
+          checkWater(db, function(remaining, total) {
+            pot.remaining = remaining;
+            pot.total = total;
+            websocket.emit('pot', pot);
+          });
         });
       }
     });
   } else {
-    sock.write('?L', function(){
-      console.log('Querying the brightness of Lights');
-    });
-    sock.once('data', function(data) {
-      //console.log(JSON.stringify(data));
-      brightness = parseInt(data, 10);
-      if(!isNaN(brightness)) {
-        pot.light = brightness;
-        console.log('Light brightness = ' + brightness);
-      }
-      res.end(JSON.stringify(pot));
-    });
+    res.end(JSON.stringify(pot));
   }
 }
 
@@ -101,20 +94,16 @@ function onOffHandler(dev, db, req, res, pot, sock, websocket, query){
         console.log('The ' + inst[dev].name + ' is switched ' + query.action);
         logHistory(db, dev, req, query.action, function() {
           res.end(JSON.stringify(pot));
-          websocket.emit('pot', pot);
+          checkWater(db, function(remaining, total) {
+            pot.remaining = remaining;
+            pot.total = total;
+            websocket.emit('pot', pot);
+          });
         });
       }
     });
   } else {           //Accquire
-    sock.write(inst[dev].query, function(){
-      console.log('Querying the state of ' + inst[dev].name);
-    });
-    sock.once('data', function(data) {  //Waiting for acknowledgement
-      if(data == '1') eval('pot.' + dev + ' = true');
-      else eval('pot.' + dev + ' = false');
-      console.log('The lights are ' + (data == 1 ? 'ON' : 'OFF'));
-      res.end(JSON.stringify(pot));
-    });
+    res.end(JSON.stringify(pot));
   }
 }
 
@@ -139,7 +128,12 @@ function triggerHandler(dev, db, req, res, pot, sock, websocket, query){
               console.log('The ' + inst[dev].name + ' is switched ' + query.action);
               logHistory(db, dev, req, query.action, function() {
                 res.end(JSON.stringify(pot));
-                websocket.emit('pot', pot);
+                checkWater(db, function(remaining, total) {
+                  pot.water = (remaining == 0);
+                  pot.remaining = remaining;
+                  pot.total = total;
+                  websocket.emit('pot', pot);
+                });
               });
             }
           }); //end of sock.once callback
@@ -231,3 +225,4 @@ exports.onOffHandler   = onOffHandler;
 exports.triggerHandler = triggerHandler;
 exports.historyHandler = historyHandler;
 exports.counterHandler = counterHandler;
+exports.checkWater     = checkWater;
