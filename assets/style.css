@@ -1,0 +1,134 @@
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, main, summary {
+	display: block
+}
+audio, canvas, video {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1
+}
+audio:not([controls]) {
+	display: none
+}
+[hidden] {
+	display: none
+}*/
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0
+}
+*, *:before, *:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border: 0;
+}
+
+body.demo-flare {
+	font-family: arial, sans-serif
+}
+body.demo-flare #top-nav {
+	float: right;
+	/*margin: 5px 20px*/
+}
+
+html.fsvs {
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	overflow: hidden
+}
+html.fsvs #fsvs-body {
+	-webkit-backface-visibility: hidden;
+	-webkit-perspective: 1000;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	height: 100%;
+	width: 100%
+}
+html.fsvs #fsvs-body>* {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	-webkit-backface-visibility: hidden;
+	-webkit-perspective: 1000
+}
+html.fsvs.no-hijack {
+	overflow: auto;
+	position: relative
+}
+html.fsvs.no-hijack #fsvs-body {
+	position: static;
+	transition: none !important;
+	-webkit-transition: none !important;
+	-webkit-transform: none !important;
+	transform: none !important
+}
+html.fsvs.no-hijack #fsvs-pagination {
+	display: none
+}
+
+/*@media only screen and (max-device-width:500px) {
+	html.fsvs #fsvs-body>.slide h2 {
+		font-size: 18px;
+		font-size: 1.125rem;
+		line-height: 1.33333
+	}
+	html.fsvs #fsvs-body>.slide p {
+		font-size: 18px;
+		font-size: 1.125rem;
+		line-height: 1.33333
+	}
+	html.fsvs #fsvs-body>.slide p a {
+		white-space: nowrap;
+		overflow: hidden;
+		-ms-text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
+		text-overflow: ellipsis;
+		display: block
+	}
+	html.fsvs #fsvs-body>.slide pre {
+		max-width: 100%;
+		overflow: auto
+	}
+	html.fsvs #fsvs-body>.slide pre code {
+		float: left
+	}
+	html.fsvs #fsvs-body #fsvs-pagination {
+		right: 3px !important
+	}
+}*/
+body {
+	font-family: 'Open Sans', sans-serif
+}
+
+.slide {
+	/*padding: 0px 40px 0px 100px*/
+}
+
+.slide.nth-class-1 {
+	background: #333333
+}
+.slide.nth-class-1 .colour-wrapper, .slide.nth-class-1 .item {
+	background: #333333
+}
+
+.slide.nth-class-2 {
+	background: #78e6bb
+}
+.slide.nth-class-2 .colour-wrapper, .slide.nth-class-2 .item {
+	background: #78e6bb
+}
+
+.slide.nth-class-3 {
+	background: #ebead4
+}
+.slide.nth-class-3 .colour-wrapper, .slide.nth-class-3 .item {
+	background: #ebead4
+}
+
+
