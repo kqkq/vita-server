@@ -34,6 +34,9 @@
     .c3-axis-y {
       width: 50px;
     }
+    .tick text {
+      font-family: DIN-Regular "Helvetica Neue" "Helvetica" Arial sans-serif;
+    }
     /* slide-1 */
     .header {
       text-align: center;
@@ -43,7 +46,6 @@
       display: table;
       position: absolute;
       width: 100%;
-      /*            height: 70%;*/
     }
 
     .middle {
@@ -67,7 +69,6 @@
     /* button */
     .first {
       display: inline-block;
-      /*float: left;  必须用float 用inline了之后竖屏后无法并排显示 */
       margin: 0 50px;
     }
     .second {
@@ -117,15 +118,32 @@
       -o-animation-play-state: paused;
       animation-play-state: paused;
     }
+    .hover > .icon path{
+      fill: #00FFCE;
+    }
+    .hover >  .text path{
+      fill: #00FFCE;
+    }
+    .click > .icon path{
+      fill: #333333;
+    }
+    .click > .icon circle{
+      fill: #00FFCE;
+      stroke: none;
+    }
+    .on > .icon path{
+      fill: #00FFCE;
+    }
+    .operating > .text path{
+     fill: #00FFCE;
+    }
 
     /* slide-2 */
 
     #record {
-      /*width: 300px;*/
       width: device-width;
       text-align: left;
       margin: 0 auto;
-      /*            margin-top: 50px;*/
       height: 70%;
       overflow: hidden;
       text-overflow:ellipsis; 
@@ -164,7 +182,7 @@
       width: 60%;
       min-width: 644px;
       height: 45%;
-      margin: 40px auto 25px auto;
+      margin: 0 auto 25px auto;
     }
     #footer {
       background: url(footer.jpg);
@@ -207,7 +225,7 @@
       position: relative;
       text-align: center;
       color: #333333;
-      font-family: DIN-Regular Lato;
+      font-family:  DIN-Regular "Helvetica Neue" "Helvetica" Arial sans-serif;
       font-weight: 100;
     }
 
@@ -220,10 +238,12 @@
       left: 0;
       font-size: 2rem;
       text-align: center;
+      font-family: DIN-Regular "Helvetica Neue" "Helvetica" Arial sans-serif;
     }
 
     .progress svg {
       width: 160px;
+      height: 217px;
     }
 
     #radialbar {
@@ -261,13 +281,11 @@
       animation: load1 2s;
     }
 
+    /* mobile phone */
     @media only screen
     and (min-device-width: 320px)
     and (max-device-width: 670px)
     and (orientation : portrait) {
-  /*            .outer {
-        height: 80%;
-      }*/
       .header {
         margin-top: 20px;
       }
@@ -283,12 +301,10 @@
         padding-left: 55px;
       }
       .first {
-        /*padding-left: 10px;*/
         display: block;
         margin: 0 auto;
         width: 185px;
         height: 90px;
-        /*float: none;   */
       }
       .second {
         display: inline-block;
@@ -319,17 +335,6 @@
       #history span {
         font-size: 0.8rem;
       }
-  /*  #record {
-        width: 200px;
-        margin-top: 25px;
-        margin: 100;
-      }*/
-    /*#record p {
-        font-size: 7px;
-        letter-spacing: 0.05rem;
-        margin-top: 16px;
-
-      }*/
       #info {
         min-width: 300px;
         width: 100%;
@@ -351,7 +356,6 @@
         text-align: center;
       }
       .progress li{
-        /*line-height: 200px;*/
         vertical-align: middle;
       }
       .progress>li:after {
@@ -360,17 +364,15 @@
       }
       .progress svg {
         width: 80px;
+        height: 109px;
       }
     }
 
-    /*iphone 5 & 6*/
+    /*iphone 6*/
     @media only screen 
     and (min-device-width : 320px) 
-    and (min-device-height : 568px) 
+    and (min-device-height : 600px) 
     and (orientation : portrait) {
-      .outer {
-        height: 75%;
-      }
       .header {
         margin-top: 40px;
       }
@@ -378,122 +380,8 @@
         margin-top: 20px;
       }
       #chart {
-        margin-top: 22%;
-        margin-bottom: 18%;
+        margin-bottom: 30px;
       }
-    }
-
-   /* @media only screen
-    and (min-device-width: 320px)
-    and (max-device-width: 670px)
-    and (orientation : landscape) {*/
-    @media only screen
-    and (max-device-width: 670px)
-    and (max-device-height: 400px) {
-/*    .outer {
-          height: 75%;
-        }*/
-      .header {
-        margin-top: 20px;
-      }
-      #slide-1 .header svg{
-        width: 105px;
-        height: 45px;
-      }
-      #slide-2 .header svg{
-        width: 240px;
-        height: 45px;
-      }
-      /*#content {
-          padding-left: 55px;
-        }*/
-      .first {
-        /*padding-left: 10px;*/
-        /*display: block;*/
-        margin: 0 auto;
-        width: 150px;
-        height: 120px;
-        /*float: none;   */
-      }
-      .button {
-        width: 120px;
-        height: 120px;
-      }
-      .word {
-        width: 58px;
-        height: 29px;
-      }
-      .footer svg{
-        height: 28px;
-      }
-      #history {
-        width: 50%;
-        min-width: 300px;
-        max-width: 320px;
-      }
-      #history h2 {
-        font-size: 0.7rem;
-        letter-spacing: 0.2rem;
-      }
-      #history span {
-        font-size: 0.7em;
-      }
-      #record {
-        width: 250px;
-        margin-top: 25px;
-      }
-      /*#record p {
-        font-size: 0.4rem;
-        letter-spacing: 0.05rem;
-        margin-top: 1rem;
-      }*/
-
-      #info li {
-        font-size: 0.4rem;
-      }
-      .progress {
-        width: 100%;
-        min-width: 300px;
-        padding: 0;
-      }
-      .progress li{
-        /*line-height: 200px;*/
-        vertical-align: middle;
-      }
-      .progress svg {
-        width: 80px;
-        height: 120px;
-      }
-      /*#chart {
-        width: 480px;
-        min-width: 480px;
-        max-width: 540px;
-        height: 257px;
-      }*/
-    }
-
-
-    /*.hover:hover > .icon path{
-      fill: #00FFCE;
-    }*/
-    .hover > .icon path{
-      fill: #00FFCE;
-    }
-    .hover >  .text path{
-      fill: #00FFCE;
-    }
-    .click > .icon path{
-      fill: #333333;
-    }
-    .click > .icon circle{
-      fill: #00FFCE;
-      stroke: none;
-    }
-    .on > .icon path{
-      fill: #00FFCE;
-    }
-    .operating > .text path{
-     fill: #00FFCE;
     }
   </style>
 </head>
@@ -501,7 +389,7 @@
   <div id="fsvs-body">
     <div class="slide">
       <div class="header">
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" witdth="200px" height="90px" viewBox="0 0 208 100" enable-background="new 0 0 208 100" xml:space="preserve">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" witdth="220px" height="105px" viewBox="0 0 208 100" enable-background="new 0 0 208 100" xml:space="preserve">
           <g>
             <path fill="#00FFCE" d="M39.043,87.086h11.719V82.75h-9.609v-4.453h9.609v-3.984h-5.625c-0.392,0.782-1.016,1.954-1.875,3.516
             c0.077-0.155,0-0.038-0.234,0.352c-0.626-0.39-2.109-1.172-4.453-2.344c2.109-3.124,3.593-6.562,4.453-10.312l4.922,0.82
@@ -1162,10 +1050,10 @@
                 <circle fill="none" stroke="#00FFCE" stroke-width="4.5" cx="103" cy="103" r="85"/>
                 <path d="M103,103 m -85,0 a 85,85 0 1,0 170,0  a 85,85 0 1,0 -170,0" stroke-offset="200" transform="rotate(90 103 103)"></path>
               </g>
-              <g class="word" transform="translate(71 246)">
+              <g class="word" transform="translate(82 240)">
                 <text font-size="32px"></text>
-                <g transform="translate(12 10)">
-                  <path fill="#989898" d="M10.753,7.05V6.035h6.25V7.05c-0.99,4.219-2.969,7.812-5.938,10.781c-0.105-0.105-0.312-0.234-0.625-0.391
+                <g transform="translate(0 10)">
+                  <path fill="#333333" d="M10.753,7.05V6.035h6.25V7.05c-0.99,4.219-2.969,7.812-5.938,10.781c-0.105-0.105-0.312-0.234-0.625-0.391
                   c-0.156-0.104-0.262-0.182-0.312-0.234c3.02-3.02,4.922-6.406,5.703-10.156H10.753z M19.034,1.269h1.094v2.969
                   c0.832,2.031,1.535,3.568,2.109,4.609c1.197-0.938,2.682-2.344,4.453-4.219L27.55,5.41c-1.562,1.615-3.178,3.074-4.844,4.375
                   c1.562,2.709,3.723,5.027,6.484,6.953c-0.312,0.312-0.625,0.6-0.938,0.859c-3.75-2.812-6.459-6.457-8.125-10.938V17.05
@@ -1182,15 +1070,15 @@
                 <path d="M103,103 m -85,0 a 85,85 0 1,0 170,0  a 85,85 0 1,0 -170,0" transform="rotate(90 103 103)"></path>
               </g>
 
-              <g class = "word" transform="translate(71 246)">
+              <g class = "word" transform="translate(82 240)">
                 <text font-size="32px"></text>
-                <g transform="translate(0.5 10)">
-                  <path fill="#666666" d="M18.568,13.741c0,1.875-0.781,2.891-2.344,3.047c-0.469,0.053-0.965,0.078-1.484,0.078
+                <g transform="translate(-11.5 10)">
+                  <path fill="#333333" d="M18.568,13.741c0,1.875-0.781,2.891-2.344,3.047c-0.469,0.053-0.965,0.078-1.484,0.078
                   c-0.053-0.416-0.156-0.807-0.312-1.172c0.363,0.053,0.91,0.078,1.641,0.078c0.938-0.051,1.406-0.703,1.406-1.953
                   c0-1.613-0.652-3.176-1.953-4.688l1.953-5.781H13.88v16.719h-1.016V2.413h5.625v1.016l-1.797,5.547
                   C17.943,10.434,18.568,12.022,18.568,13.741z M20.208,20.069V2.647h9.688v17.422h-1.094v-1.484h-7.578v1.484H20.208z
                   M21.224,3.584v6.484h7.578V3.584H21.224z M21.224,11.084v6.641h7.578v-6.641H21.224z"/>
-                  <path fill="#666666" d="M40.833,1.397h1.094v8.281h8.828v1.016h-6.484v6.641c0,0.832,0.52,1.25,1.562,1.25h2.109
+                  <path fill="#333333" d="M40.833,1.397h1.094v8.281h8.828v1.016h-6.484v6.641c0,0.832,0.52,1.25,1.562,1.25h2.109
                   c0.988,0.051,1.535-0.287,1.641-1.016c0-0.104,0.025-0.285,0.078-0.547c0.104-0.832,0.156-1.535,0.156-2.109
                   c0.207,0.105,0.52,0.184,0.938,0.234c0.051,0.053,0.104,0.078,0.156,0.078c-0.156,1.094-0.262,1.953-0.312,2.578
                   C50.337,19,49.505,19.6,48.099,19.6h-2.5c-1.562,0-2.344-0.73-2.344-2.188v-6.719H38.88c0.26,4.637-1.824,7.76-6.25,9.375
@@ -1208,15 +1096,15 @@
                 <circle fill="none" stroke="#00FFCE" stroke-width="4.5" cx="103" cy="103" r="85"/>
                 <path d="M103,103 m -85,0 a 85,85 0 1,0 170,0  a 85,85 0 1,0 -170,0" transform="rotate(90 103 103)"></path>
               </g>
-              <g class="word" transform="translate(71 246)">
+              <g class="word" transform="translate(82 240)">
                 <text font-size="32px"></text>
-                <g transform="translate(12 10)">
-                  <path fill="#666666" d="M7.5,6.63l0.781,0.781c-2.293,1.771-4.559,3.309-6.797,4.609c-0.209-0.312-0.443-0.625-0.703-0.938
+                <g transform="translate(0 10)">
+                  <path fill="#333333" d="M7.5,6.63l0.781,0.781c-2.293,1.771-4.559,3.309-6.797,4.609c-0.209-0.312-0.443-0.625-0.703-0.938
                   C2.863,9.938,5.103,8.454,7.5,6.63z M3.203,11.786h13.516v0.938h-6.172v5.547h8.203v1.016H1.25v-1.016h8.203v-5.547h-6.25V11.786z
                   M9.062,1.786l1.016-0.391c0.363,0.781,0.703,1.562,1.016,2.344L10.156,4.13h8.516v3.594h-1.094V5.067H2.421v2.656H1.328V4.13H10
                   C9.687,3.349,9.375,2.567,9.062,1.786z M18.515,11.942c-2.396-1.719-4.609-3.229-6.641-4.531L12.5,6.63
                   c2.135,1.25,4.375,2.709,6.719,4.375L18.515,11.942z"/>
-                  <path fill="#666666" d="M21.171,10.302c-0.312-0.469-0.521-0.807-0.625-1.016c1.979-2.188,3.566-4.791,4.766-7.812l1.094,0.312
+                  <path fill="#333333" d="M21.171,10.302c-0.312-0.469-0.521-0.807-0.625-1.016c1.979-2.188,3.566-4.791,4.766-7.812l1.094,0.312
                   c-0.312,0.678-0.625,1.328-0.938,1.953h13.047v0.938H25C23.957,6.604,22.681,8.479,21.171,10.302z M22.5,11.083v-0.938h13.438
                   v1.797c-0.053,3.543,0.207,5.703,0.781,6.484c0.207,0.416,0.469,0.625,0.781,0.625s0.547-0.34,0.703-1.016
                   c0-0.053,0.025-0.129,0.078-0.234c0.104-1.041,0.182-1.9,0.234-2.578c0.156,0.105,0.441,0.209,0.859,0.312
@@ -1517,6 +1405,8 @@
     };
 
     function refreshHistory() {
+      var displayIp = true;
+      if (document.documentElement.clientWidth < 800) displayIp = false;
       $.get("/counter/main", function(json) {
         $("#total").html(json.total);
       });
@@ -1525,8 +1415,9 @@
         var len = json.length;
         for(var i = 0; i < len; i++) {
           his += '<p>' + new Date(json[i].time).Format("yyyy.MM.dd hh:mm") + '  ' + 
-          '&nbsp&nbsp&nbsp来自' + json[i].loc  + 
-          '提供' + en2cn[json[i].device];
+          '&nbsp&nbsp&nbsp来自' + json[i].loc;
+          if (displayIp) his += json[i].ip; 
+          his += '提供' + en2cn[json[i].device];
         }
         $("#record").html(his);
         var recordheight = $("#record").offset().top + $("#record").height();
@@ -1645,18 +1536,29 @@
       });
 
       console.log('jQuery is working');
-      $("#record").css("margin-left",( document.documentElement.clientWidth - 250) / 2);
+      var recordMargin = 250;
+      var chartMargin = 0;
+      if (document.documentElement.clientWidth > 800) recordMargin = 350;
+      chartMargin = document.documentElement.clientHeight - $("#chart").outerHeight(true) - $("#radialbar").height() - $("#footer").height();
+      console.log(document.documentElement.clientHeight + " " + $("#chart").outerHeight(true) + " " + $("#radialbar").height() + " "
+        + $("#footer").height() + " " + chartMargin);
+      $("#chart").css("margin-top", chartMargin ? chartMargin/2 : 0);
+      $("#record").css("margin-left",(document.documentElement.clientWidth - recordMargin) / 2);
       $("#record").css("height", document.documentElement.clientHeight -  $("#slide-2 .header").outerHeight(true) - 
         $("#history").height() - $(".footer").height());
-      $(".outer").css("height", document.documentElement.clientHeight -  $("#slide-2 .header").outerHeight(true) - 
+      $("#slide-1 .outer").css("height", document.documentElement.clientHeight -  $("#slide-1 .header").outerHeight(true) - 
         $(".footer").height() - 25);
+      // $("#slide-3 .outer").css("height", document.documentElement.clientHeight -  $("#footer").height() - 25);
 
       $(window).resize(function() {
-        $("#record").css("margin-left",( document.documentElement.clientWidth - 250 ) / 2);
+        if (document.documentElement.clientWidth > 800) recordMargin = 350;
+        else recordMargin = 250;
+        $("#record").css("margin-left",(document.documentElement.clientWidth - recordMargin) / 2);
         $("#record").css("height", document.documentElement.clientHeight -  $("#slide-2 .header").outerHeight(true) - 
           $("#history").height() - $(".footer").height());
-        $(".outer").css("height", document.documentElement.clientHeight -  $("#slide-2 .header").outerHeight(true) - 
-          $(".footer").height());
+        $("#slide-1 .outer").css("height", document.documentElement.clientHeight -  $("#slide-1 .header").outerHeight(true) - 
+        $(".footer").height() - 25);
+        // $("#slide-3 .outer").css("height", document.documentElement.clientHeight -  $("#footer").height() - 25);
       });
       refreshHistory();
       refreshChart();
