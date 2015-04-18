@@ -48,6 +48,8 @@ function pwmHandler(dev, db, req, res, pot, sock, websocket, query) {
       });
     } else {
       brightness = parseInt(query.dim, 10);
+      if(brightness < 0) brightness = 0;
+      if(brightness > 255) brightness = 255;
       sock.write('~L' + brightness, function(){
         console.log('Alternate brightness to ' + brightness);
       });
