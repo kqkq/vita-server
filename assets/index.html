@@ -13,7 +13,7 @@
   <script src="http://apps.bdimg.com/libs/jquerymobile/1.4.2/jquery.mobile.min.js"></script>
   <script src="fsvs.js"></script>
   <script src="main.js"></script>
-  <script src="c3.min.js"></script>
+  <script src="http://libs.cncdn.cn/c3/0.4.9/c3.min.js"></script>
   <style>
     * {
       -webkit-user-select:none;
@@ -90,29 +90,26 @@
     }
     /* Load animation */
     @-webkit-keyframes load {
-      0% { stroke-dashoffset: 629 }
-      50% { stroke-dashoffset: 0 }
-      100% { stroke-dashoffset: 629 }
+      0% {stroke-dashoffset: 1887}
+      100% {stroke-dashoffset: 629}
     }
     @-moz-keyframes load {
-      0% { stroke-dashoffset: 629 }
-      50% { stroke-dashoffset: 0 }
-      100% { stroke-dashoffset: 629}
+      0% {stroke-dashoffset: 1887}
+      100% {stroke-dashoffset: 629}
     }
     @keyframes load {
-      0% { stroke-dashoffset: 629 }
-      50% { stroke-dashoffset: 0 }
-      100% { stroke-dashoffset: 629}
+      0% {stroke-dashoffset: 1887}
+      100% {stroke-dashoffset: 629}
     }
     .submit path {
       fill: none;
       stroke-width: 5;
       stroke-dasharray: 629;
       stroke: rgba(0, 255, 207, 1);
-      -webkit-animation: load 2s infinite linear reverse;
-      -moz-animation: load 2s infinite linear reverse;
-      -o-animation: load 2s infinite linear reverse;
-      animation: load 2s infinite linear reverse;
+      -webkit-animation: none 2s infinite linear reverse;
+      -moz-animation: none 2s infinite linear reverse;
+      -o-animation: none 2s infinite linear reverse;
+      animation: none 2s infinite linear reverse;
       -webkit-animation-play-state: paused;
       -moz-animation-play-state: paused;
       -o-animation-play-state: paused;
@@ -241,9 +238,13 @@
       font-family: DIN-Regular "Helvetica Neue" "Helvetica" Arial sans-serif;
     }
 
-    .progress svg {
+    /*.progress svg {
       width: 160px;
       height: 217px;
+    }*/
+    .progress .word {
+      width: 160px;
+      height: 13px;
     }
 
     #radialbar {
@@ -357,6 +358,7 @@
       }
       .progress li{
         vertical-align: middle;
+        line-height: 0.7rem;
       }
       .progress>li:after {
         top: 2rem;
@@ -364,7 +366,14 @@
       }
       .progress svg {
         width: 80px;
-        height: 109px;
+        height: 80px;
+      }
+      .progress .word{
+        width: 70px;
+        height: 10px;
+      }
+      .progress span {
+        font-size: 0.2rem;
       }
     }
 
@@ -531,7 +540,7 @@
                         </g>
                       </g>
                       <g class = "submit">
-                        <path d="M18,103 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" stroke-dashoffset="629" transform="rotate(90 103 103)"></path>
+                        <path d="M18,103 a85,85 0 1,0 170,0 a85,85 0 1,0 -170,0" stroke-dashoffset="1887" transform="rotate(90 103 103)"></path>
                       </g>
                       <g class = "succes">
                         <circle fill="none" stroke="#00FFCE" stroke-width="5" cx="103" cy="103" r="85"/>
@@ -647,7 +656,7 @@
                         </g>
                       </g>
                       <g class = "submit">
-                        <path d="M18,103 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" stroke-dashoffset="629" transform="rotate(90 103 103)"></path>
+                        <path d="M18,103 a85,85 0 1,0 170,0 a85,85 0 1,0 -170,0" stroke-dashoffset="1887" transform="rotate(90 103 103)"></path>
                       </g>
                       <g class = "succes">
                         <circle fill="none" stroke="#00FFCE" stroke-width="5" cx="103" cy="103" r="85"/>
@@ -753,7 +762,7 @@
                         </g>
                       </g>
                       <g class = "submit">
-                        <path d="M18,103 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" stroke-dashoffset="629" transform="rotate(90 103 103)"></path>
+                        <path d="M18,103 a85,85 0 1,0 170,0 a85,85 0 1,0 -170,0" stroke-dashoffset="1887" transform="rotate(90 103 103)"></path>
                       </g>
                       <g class = "succes">
                         <circle fill="none" stroke="#00FFCE" stroke-width="5" cx="103" cy="103" r="85"/>
@@ -797,67 +806,11 @@
       <div class="footer">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="75px" height="37px" viewBox="0 0 75 35" enable-background="new 0 0 300 300" xml:space="preserve">
           <g>       
-            <image overflow="visible" opacity="0.5" width="75" height="47" xlink:href="data:image/png;base64,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">
-          </image>
-          <path fill="#00FFCE" d="M65.829,36.964c0-15.572-12.624-28.067-28.196-28.067c-15.572,0-28.196,12.43-28.196,28.002
-          c0,0.099,0.006,0.1,0.007,0.1h56.377C65.823,37,65.829,37.063,65.829,36.964z"/>
-          <path fill="#333333" d="M37.633,32.196c-0.398,0-0.779-0.158-1.061-0.44l-9.63-9.631c-0.586-0.586-0.586-1.535,0-2.121
-          s1.535-0.586,2.121,0l8.57,8.57l8.57-8.57c0.586-0.586,1.535-0.586,2.121,0c0.586,0.586,0.586,1.535,0,2.121l-9.631,9.631
-          C38.412,32.038,38.031,32.196,37.633,32.196z"/>
+            <path fill="#00FFCE" d="M65.829,36.964c0-15.572-12.624-28.067-28.196-28.067c-15.572,0-28.196,12.43-28.196,28.002
+            c0,0.099,0.006,0.1,0.007,0.1h56.377C65.823,37,65.829,37.063,65.829,36.964z"/>
+            <path fill="#333333" d="M37.633,32.196c-0.398,0-0.779-0.158-1.061-0.44l-9.63-9.631c-0.586-0.586-0.586-1.535,0-2.121
+            s1.535-0.586,2.121,0l8.57,8.57l8.57-8.57c0.586-0.586,1.535-0.586,2.121,0c0.586,0.586,0.586,1.535,0,2.121l-9.631,9.631
+            C38.412,32.038,38.031,32.196,37.633,32.196z"/>
           </g>
         </svg>
       </div>
@@ -1045,72 +998,71 @@
       <div id="radialbar">
         <ul class="progress">
           <li class="water"> 
-            <svg viewBox="0 0 206 280">
+            <svg width="160" height="160" viewBox="0 0 207 207">
               <g class = "circle">
                 <circle fill="none" stroke="#00FFCE" stroke-width="4.5" cx="103" cy="103" r="85"/>
                 <path d="M103,103 m -85,0 a 85,85 0 1,0 170,0  a 85,85 0 1,0 -170,0" stroke-offset="200" transform="rotate(90 103 103)"></path>
               </g>
-              <g class="word" transform="translate(82 240)">
-                <text font-size="32px"></text>
-                <g transform="translate(0 10)">
+            </svg>
+            <span style="display:block;"></span>
+            <svg class="word" width="160" height="13" viewBox="0 0 206 20">
+              <g transform="translate(82 0)">
                   <path fill="#333333" d="M10.753,7.05V6.035h6.25V7.05c-0.99,4.219-2.969,7.812-5.938,10.781c-0.105-0.105-0.312-0.234-0.625-0.391
                   c-0.156-0.104-0.262-0.182-0.312-0.234c3.02-3.02,4.922-6.406,5.703-10.156H10.753z M19.034,1.269h1.094v2.969
                   c0.832,2.031,1.535,3.568,2.109,4.609c1.197-0.938,2.682-2.344,4.453-4.219L27.55,5.41c-1.562,1.615-3.178,3.074-4.844,4.375
                   c1.562,2.709,3.723,5.027,6.484,6.953c-0.312,0.312-0.625,0.6-0.938,0.859c-3.75-2.812-6.459-6.457-8.125-10.938V17.05
                   c0.051,1.613-0.756,2.447-2.422,2.5c-0.887,0-1.693,0-2.422,0c-0.053-0.418-0.131-0.781-0.234-1.094c0.676,0,1.457,0,2.344,0
                   c1.145,0.051,1.691-0.443,1.641-1.484V1.269z" />
-                </g>
               </g>
             </svg> 
           </li>
           <li class="sunshine"> 
-            <svg viewBox="0 0 206 280">
+            <svg width="160" height="160" viewBox="0 0 207 207">
               <g class = "circle">
                 <circle fill="none" stroke="#00FFCE" stroke-width="4.5" cx="103" cy="103" r="85"/>
                 <path d="M103,103 m -85,0 a 85,85 0 1,0 170,0  a 85,85 0 1,0 -170,0" transform="rotate(90 103 103)"></path>
               </g>
-
-              <g class = "word" transform="translate(82 240)">
-                <text font-size="32px"></text>
-                <g transform="translate(-11.5 10)">
-                  <path fill="#333333" d="M18.568,13.741c0,1.875-0.781,2.891-2.344,3.047c-0.469,0.053-0.965,0.078-1.484,0.078
-                  c-0.053-0.416-0.156-0.807-0.312-1.172c0.363,0.053,0.91,0.078,1.641,0.078c0.938-0.051,1.406-0.703,1.406-1.953
-                  c0-1.613-0.652-3.176-1.953-4.688l1.953-5.781H13.88v16.719h-1.016V2.413h5.625v1.016l-1.797,5.547
-                  C17.943,10.434,18.568,12.022,18.568,13.741z M20.208,20.069V2.647h9.688v17.422h-1.094v-1.484h-7.578v1.484H20.208z
-                  M21.224,3.584v6.484h7.578V3.584H21.224z M21.224,11.084v6.641h7.578v-6.641H21.224z"/>
-                  <path fill="#333333" d="M40.833,1.397h1.094v8.281h8.828v1.016h-6.484v6.641c0,0.832,0.52,1.25,1.562,1.25h2.109
-                  c0.988,0.051,1.535-0.287,1.641-1.016c0-0.104,0.025-0.285,0.078-0.547c0.104-0.832,0.156-1.535,0.156-2.109
-                  c0.207,0.105,0.52,0.184,0.938,0.234c0.051,0.053,0.104,0.078,0.156,0.078c-0.156,1.094-0.262,1.953-0.312,2.578
-                  C50.337,19,49.505,19.6,48.099,19.6h-2.5c-1.562,0-2.344-0.73-2.344-2.188v-6.719H38.88c0.26,4.637-1.824,7.76-6.25,9.375
-                  c-0.053-0.105-0.184-0.262-0.391-0.469c-0.156-0.262-0.287-0.443-0.391-0.547c4.166-1.199,6.145-3.984,5.938-8.359h-5.703V9.678
-                  h8.75V1.397z M33.568,3.663l0.859-0.625c0.676,0.73,1.666,1.875,2.969,3.438c0.26,0.262,0.441,0.469,0.547,0.625l-0.938,0.703
-                  C36.015,6.553,34.869,5.174,33.568,3.663z M45.365,7.959l-0.859-0.703c1.457-1.354,2.707-2.76,3.75-4.219l0.938,0.703
-                  C48.099,5.043,46.822,6.45,45.365,7.959z"/>
-                </g>
+            </svg>
+            <span style="display:block;"></span>
+            <svg class = "word" width="160" height="13" viewBox="0 0 206 20">
+              <g transform="translate(71.5 0)">
+                <path fill="#333333" d="M18.568,13.741c0,1.875-0.781,2.891-2.344,3.047c-0.469,0.053-0.965,0.078-1.484,0.078
+                c-0.053-0.416-0.156-0.807-0.312-1.172c0.363,0.053,0.91,0.078,1.641,0.078c0.938-0.051,1.406-0.703,1.406-1.953
+                c0-1.613-0.652-3.176-1.953-4.688l1.953-5.781H13.88v16.719h-1.016V2.413h5.625v1.016l-1.797,5.547
+                C17.943,10.434,18.568,12.022,18.568,13.741z M20.208,20.069V2.647h9.688v17.422h-1.094v-1.484h-7.578v1.484H20.208z
+                M21.224,3.584v6.484h7.578V3.584H21.224z M21.224,11.084v6.641h7.578v-6.641H21.224z"/>
+                <path fill="#333333" d="M40.833,1.397h1.094v8.281h8.828v1.016h-6.484v6.641c0,0.832,0.52,1.25,1.562,1.25h2.109
+                c0.988,0.051,1.535-0.287,1.641-1.016c0-0.104,0.025-0.285,0.078-0.547c0.104-0.832,0.156-1.535,0.156-2.109
+                c0.207,0.105,0.52,0.184,0.938,0.234c0.051,0.053,0.104,0.078,0.156,0.078c-0.156,1.094-0.262,1.953-0.312,2.578
+                C50.337,19,49.505,19.6,48.099,19.6h-2.5c-1.562,0-2.344-0.73-2.344-2.188v-6.719H38.88c0.26,4.637-1.824,7.76-6.25,9.375
+                c-0.053-0.105-0.184-0.262-0.391-0.469c-0.156-0.262-0.287-0.443-0.391-0.547c4.166-1.199,6.145-3.984,5.938-8.359h-5.703V9.678
+                h8.75V1.397z M33.568,3.663l0.859-0.625c0.676,0.73,1.666,1.875,2.969,3.438c0.26,0.262,0.441,0.469,0.547,0.625l-0.938,0.703
+                C36.015,6.553,34.869,5.174,33.568,3.663z M45.365,7.959l-0.859-0.703c1.457-1.354,2.707-2.76,3.75-4.219l0.938,0.703
+                C48.099,5.043,46.822,6.45,45.365,7.959z"/>
               </g>
             </svg> 
           </li>
           <li class="air"> 
-            <svg viewBox="0 0 206 280">
+            <svg width="160" height="160" viewBox="0 0 207 207">
               <g class = "circle">
                 <circle fill="none" stroke="#00FFCE" stroke-width="4.5" cx="103" cy="103" r="85"/>
                 <path d="M103,103 m -85,0 a 85,85 0 1,0 170,0  a 85,85 0 1,0 -170,0" transform="rotate(90 103 103)"></path>
               </g>
-              <g class="word" transform="translate(82 240)">
-                <text font-size="32px"></text>
-                <g transform="translate(0 10)">
-                  <path fill="#333333" d="M7.5,6.63l0.781,0.781c-2.293,1.771-4.559,3.309-6.797,4.609c-0.209-0.312-0.443-0.625-0.703-0.938
-                  C2.863,9.938,5.103,8.454,7.5,6.63z M3.203,11.786h13.516v0.938h-6.172v5.547h8.203v1.016H1.25v-1.016h8.203v-5.547h-6.25V11.786z
-                  M9.062,1.786l1.016-0.391c0.363,0.781,0.703,1.562,1.016,2.344L10.156,4.13h8.516v3.594h-1.094V5.067H2.421v2.656H1.328V4.13H10
-                  C9.687,3.349,9.375,2.567,9.062,1.786z M18.515,11.942c-2.396-1.719-4.609-3.229-6.641-4.531L12.5,6.63
-                  c2.135,1.25,4.375,2.709,6.719,4.375L18.515,11.942z"/>
-                  <path fill="#333333" d="M21.171,10.302c-0.312-0.469-0.521-0.807-0.625-1.016c1.979-2.188,3.566-4.791,4.766-7.812l1.094,0.312
-                  c-0.312,0.678-0.625,1.328-0.938,1.953h13.047v0.938H25C23.957,6.604,22.681,8.479,21.171,10.302z M22.5,11.083v-0.938h13.438
-                  v1.797c-0.053,3.543,0.207,5.703,0.781,6.484c0.207,0.416,0.469,0.625,0.781,0.625s0.547-0.34,0.703-1.016
-                  c0-0.053,0.025-0.129,0.078-0.234c0.104-1.041,0.182-1.9,0.234-2.578c0.156,0.105,0.441,0.209,0.859,0.312
-                  c0.051,0,0.104,0,0.156,0c0,0.781-0.105,1.719-0.312,2.812c-0.209,1.25-0.781,1.848-1.719,1.797c-0.781,0-1.355-0.391-1.719-1.172
-                  c-0.678-1.041-0.99-3.385-0.938-7.031v-0.859H22.5z M24.687,6.864h12.266V7.88H24.687V6.864z"/>
-                </g>
+            </svg>
+            <span style="display:block;"></span>
+            <svg class="word" width="160" height="13" viewBox="0 0 206 20">
+              <g transform="translate(82 0)">
+                <path fill="#333333" d="M7.5,6.63l0.781,0.781c-2.293,1.771-4.559,3.309-6.797,4.609c-0.209-0.312-0.443-0.625-0.703-0.938
+                C2.863,9.938,5.103,8.454,7.5,6.63z M3.203,11.786h13.516v0.938h-6.172v5.547h8.203v1.016H1.25v-1.016h8.203v-5.547h-6.25V11.786z
+                M9.062,1.786l1.016-0.391c0.363,0.781,0.703,1.562,1.016,2.344L10.156,4.13h8.516v3.594h-1.094V5.067H2.421v2.656H1.328V4.13H10
+                C9.687,3.349,9.375,2.567,9.062,1.786z M18.515,11.942c-2.396-1.719-4.609-3.229-6.641-4.531L12.5,6.63
+                c2.135,1.25,4.375,2.709,6.719,4.375L18.515,11.942z"/>
+                <path fill="#333333" d="M21.171,10.302c-0.312-0.469-0.521-0.807-0.625-1.016c1.979-2.188,3.566-4.791,4.766-7.812l1.094,0.312
+                c-0.312,0.678-0.625,1.328-0.938,1.953h13.047v0.938H25C23.957,6.604,22.681,8.479,21.171,10.302z M22.5,11.083v-0.938h13.438
+                v1.797c-0.053,3.543,0.207,5.703,0.781,6.484c0.207,0.416,0.469,0.625,0.781,0.625s0.547-0.34,0.703-1.016
+                c0-0.053,0.025-0.129,0.078-0.234c0.104-1.041,0.182-1.9,0.234-2.578c0.156,0.105,0.441,0.209,0.859,0.312
+                c0.051,0,0.104,0,0.156,0c0,0.781-0.105,1.719-0.312,2.812c-0.209,1.25-0.781,1.848-1.719,1.797c-0.781,0-1.355-0.391-1.719-1.172
+                c-0.678-1.041-0.99-3.385-0.938-7.031v-0.859H22.5z M24.687,6.864h12.266V7.88H24.687V6.864z"/>
               </g>
             </svg> 
           </li>
@@ -1190,6 +1142,8 @@
           if(json.light > 127.5) flag = 1;
           var ex = 103 + Math.sin(angle) * 85 - 0.01;
           var ey = 103 - Math.cos(angle) * 85;
+          if(isNaN(ex) || isNaN(ey) || isNaN(flag)) alert("jason.light:" + json.light + "ex:" + ex +
+            "ey:" + ey + "flag:" + flag);
           $("#sunshine .arc path").attr("d", "M 103, 18 A 85, 85 1 "+flag+", "+1+" "+ex+","+ey);
           var dx = ex - 18.5;
           var dy = ey - 18.5;
@@ -1224,18 +1178,20 @@
       air: false
     };
 
-    var socket = io();
+    var socket = io("http://io.jinhao.me");
     socket.on('pot', function(json) {
       if (isclick.water) {
         $("#water .icon").hide();
         $("#water .succes").show();
         $("#water .submit path").css("-webkit-animation-name","none");
+        $("#water .submit path").css("WebkitAnimationPlayState","paused"); 
         isclick.water = false;
       }
       if (isclick.sunshine) {
         $("#sunshine .icon").hide();
         $("#sunshine .succes").show();
         $("#sunshine .submit path").css("-webkit-animation-name","none");
+        $("#sunshine .submit path").css("WebkitAnimationPlayState","paused"); 
         isclick.sunshine = false;
       }
       if (isclick.air) {
@@ -1245,6 +1201,7 @@
         $("#air .submit path").css("-moz-animation-name","none");
         $("#air .submit path").css("-o-animation-name","none");
         $("#air .submit path").css("animation-name","none");
+        $("#air .submit path").css("WebkitAnimationPlayState","paused"); 
         isclick.air = false;
       }
       state = json;
@@ -1291,10 +1248,10 @@
         $("#air .submit path").css("-webkit-animation-name","load");
         $("#air .submit path").css("WebkitAnimationPlayState","running"); 
         if (state.air) {
-          $.get("/air?action=off", function(json){});
+          $.getJSON("http://api.jinhao.me/air?action=off", function(json){});
         }
         else {
-          $.get("/air?action=on", function(json){});
+          $.getJSON("http://api.jinhao.me/air?action=on", function(json){});
         }
       }
     });
@@ -1334,7 +1291,7 @@
         $("#water .button").attr("class", "button on");
         $("#water .submit path").css("-webkit-animation-name","load");
         $("#water .submit path").css("WebkitAnimationPlayState","running"); 
-        $.get("/water?action=on", function(json){});
+        $.getJSON("http://api.jinhao.me/water?action=on", function(json){});
       };
     })
 
@@ -1378,7 +1335,7 @@
         var val = state.light + 256/level; 
         if (val == 256) val= 255;
         if (val > 256) val = 0;
-        $.get("/light?dim="+val, function(json){});
+        $.getJSON("http://api.jinhao.me/light?dim="+val, function(json){});
       }
     })
 
@@ -1407,11 +1364,11 @@
     function refreshHistory() {
       var displayIp = true;
       if (document.documentElement.clientWidth < 800) displayIp = false;
-      $.get("/counter/main", function(json) {
+      $.getJSON("http://api.jinhao.me/counter/main", function(json) {
         $("#total").html(json.total);
       });
       var his = "";
-      $.get("history?limit=20", function(json) {
+      $.getJSON("http://api.jinhao.me/history?limit=20", function(json) {
         var len = json.length;
         for(var i = 0; i < len; i++) {
           his += '<p>' + new Date(json[i].time).Format("yyyy.MM.dd hh:mm") + '  ' + 
@@ -1430,7 +1387,7 @@
     }
 
     function refreshChart() {
-      $.get("/counter/daily", function(json) {
+      $.getJSON("http://api.jinhao.me/counter/daily", function(json) {
         var colData = [['date'], ['total']];
         for(var i = 0; i < json.length; i++) {
           colData[0].push(new Date(json[i].date));
@@ -1493,7 +1450,7 @@
     }
 
     function refreshStatistics() {
-      $.get("/counter/main", function(json) {
+      $.getJSON("http://api.jinhao.me/counter/main", function(json) {
         var percent = {
           water: json.water / json.total,
           light: json.light / json.total,
@@ -1503,9 +1460,9 @@
         $(".progress .sunshine").attr("data-percent",Math.round(percent.light * 100) + "%");
         $(".progress .air").attr("data-percent",Math.round(percent.air * 100) + "%");
 
-        $(".progress .water .word text").html(json.water);
-        $(".progress .sunshine .word text").html(json.light);
-        $(".progress .air .word text").html(json.air);
+        $(".progress .water span").html(json.water);
+        $(".progress .sunshine span").html(json.light);
+        $(".progress .air span").html(json.air);
 
         $(".water .circle path").attr("stroke-dashoffset", percent.water * 629);
         $(".sunshine .circle path").attr("stroke-dashoffset", percent.light * 629);
@@ -1531,7 +1488,7 @@
         detectHash : true
       });
 
-      $.get("/water", function(json) {
+      $.getJSON("http://api.jinhao.me/water", function(json) {
         state = json;
       });
 
